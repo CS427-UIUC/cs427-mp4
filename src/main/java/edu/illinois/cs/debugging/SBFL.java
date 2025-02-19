@@ -27,79 +27,77 @@ import org.jsoup.select.Elements;
 public class SBFL
 {
 
-	/**
-	 * Use Jsoup to parse the coverage file in the XML format.
-	 * 
-	 * @param file
-	 * @return a map from each test to the set of lines that it covers
-	 * @throws FileNotFoundException
-	 * @throws IOException
-	 */
-	protected static Map<String, Set<String>> readXMLCov(File file)
-			throws FileNotFoundException, IOException {
-		FileInputStream fileInputStream = new FileInputStream(file);
+    /**
+    * Use Jsoup to parse the coverage file in the XML format.
+    * 
+    * @param file
+    * @return a map from each test to the set of lines that it covers
+    * @throws FileNotFoundException
+    * @throws IOException
+    */
+    protected static Map<String, Set<String>> readXMLCov(File file) throws FileNotFoundException, IOException {
+        FileInputStream fileInputStream = new FileInputStream(file);
 
-		Map<String, Set<String>> res = new HashMap<String, Set<String>>();
-		Document document = Jsoup.parse(fileInputStream, "UTF-8", "",
-				Parser.xmlParser());
+        Map<String, Set<String>> res = new HashMap<String, Set<String>>();
+        Document document = Jsoup.parse(fileInputStream, "UTF-8", "",
+            Parser.xmlParser());
 
-		Elements tests = document.select("test");
-		for (Element test : tests) {
-			Element name = test.child(0);
-			Element covLines = test.child(1);
+        Elements tests = document.select("test");
+        for (Element test : tests) {
+            Element name = test.child(0);
+            Element covLines = test.child(1);
 
-			Set<String> lines = new HashSet<String>();
-			String[] items = covLines.text().split(", ");
-			Collections.addAll(lines, items);
-			res.put(name.text(), lines);
-		}
-		return res;
-	}
+            Set<String> lines = new HashSet<String>();
+            String[] items = covLines.text().split(", ");
+            Collections.addAll(lines, items);
+            res.put(name.text(), lines);
+        }
+        return res;
+    }
 
-	/**
-	 * Compute the suspiciousness values for all covered statements based on
-	 * Ochiai
-	 * 
-	 * @param cov
-	 * @param failedTests
-	 * @return a map from each line to its suspiciousness value
-	 */
-	public static Map<String, Double> Ochiai(Map<String, Set<String>> cov,
-			Set<String> failedTests) {
-		// using LinkedHashMap so that the statement list can be ranked
-		Map<String, Double> susp = new LinkedHashMap<String, Double>();
-		// TODO
-		return susp;
-	}
+    /**
+    * Compute the suspiciousness values for all covered statements based on
+    * Ochiai
+    * 
+    * @param cov
+    * @param failedTests
+    * @return a map from each line to its suspiciousness value
+    */
+    public static Map<String, Double> Ochiai(Map<String, Set<String>> cov,
+        Set<String> failedTests) {
+        // using LinkedHashMap so that the statement list can be ranked
+        Map<String, Double> susp = new LinkedHashMap<String, Double>();
+        // TODO
+        return susp;
+    }
 
-	/**
-	 * Get the suspiciousness value for the buggy line from the suspicious
-	 * statement list
-	 * 
-	 * @param susp
-	 * @param buggyLine
-	 * @return the suspiciousness value for the buggy line
-	 */
-	protected static double getSusp(Map<String, Double> susp,
-			String buggyLine) {
-		// TODO
-		return 0.0;
-	}
+    /**
+    * Get the suspiciousness value for the buggy line from the suspicious
+    * statement list
+    * 
+    * @param susp
+    * @param buggyLine
+    * @return the suspiciousness value for the buggy line
+    */
+    protected static double getSusp(Map<String, Double> susp,
+        String buggyLine) {
+        // TODO
+        return 0.0;
+    }
 
-	/**
-	 * Rank all statements based on the descending order of their suspiciousness
-	 * values. Get the rank (print the lowest rank for the tied cases) for the
-	 * buggy line from the suspicious statement list
-	 * 
-	 * @param susp
-	 * @param buggyLine
-	 * @return the rank of the buggy line
-	 */
-	protected static int getRank(Map<String, Double> susp, String buggyLine) {
-		List<Map.Entry<String, Double>> list = new LinkedList<Map.Entry<String, Double>>(
-				susp.entrySet());
-		// TODO
-		return 0;
-	}
-
+    /**
+    * Rank all statements based on the descending order of their suspiciousness
+    * values. Get the rank (print the lowest rank for the tied cases) for the
+    * buggy line from the suspicious statement list
+    * 
+    * @param susp
+    * @param buggyLine
+    * @return the rank of the buggy line
+    */
+    protected static int getRank(Map<String, Double> susp, String buggyLine) {
+        List<Map.Entry<String, Double>> list = new LinkedList<Map.Entry<String, Double>>(
+            susp.entrySet());
+        // TODO
+        return 0;
+    }
 }
